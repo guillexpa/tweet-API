@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(username: 'Guille')
+User.create(username: 'Ivan')
 
 Tweet.create(message: "Hola que tal", user_id: 1)
 Tweet.create(message: "Adios", user_id: 1)

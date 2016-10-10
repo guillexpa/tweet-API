@@ -14,8 +14,9 @@ module Api
     end
 
     def create
-      tweet = Tweet.new(  message: params[:message],
-                          user_id: @user.id
+      tweet = Tweet.new(
+                        message: params[:message],
+                        user_id: @user.id
                         )
 
       if tweet.save
