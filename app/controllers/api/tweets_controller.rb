@@ -3,6 +3,7 @@ module Api
     before_action :ensure_tweet, only: [:show, :destroy]
     before_action :authenticate
 
+
     def index
       tweets = Tweet.all
       render json: tweets
@@ -13,8 +14,8 @@ module Api
     end
 
     def create
-      tweet = Tweet.new(  message: params[:tweet][:message],
-                          user_id: current_user.id
+      tweet = Tweet.new(  message: params[:message],
+                          user_id: @user.id
                         )
 
       if tweet.save
@@ -36,16 +37,12 @@ module Api
       render(json: { errors: "Tweet wit the id #{params[:id]} is not found"}, status: 400) unless @tweet
     end
 
-    # def params_tweet
-    #   params.require(:tweet).permit(:message)
-    # end
-
 
     protected
 
     def authenticate
       authenticate_or_request_with_http_token do |token, options|
-        User.find_by(auth_token: token)
+        @user = User.find_by(auth_token: token)
       end
     end
 
