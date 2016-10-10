@@ -1,7 +1,15 @@
+require 'securerandom'
 class User < ApplicationRecord
   has_many :tweets
-  # validates :email, :presence => true, :uniqueness => true
-  # validates_format_of :email, :with => /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/
-  # validates :password, :confirmation => true
-  # validates_length_of :password, :in => 6..20, :on => :create
+  before_create :set_auth_token
+
+  private
+  def set_auth_token
+    return if auth_token.present?
+    self.auth_token = generate_auth_token
+  end
+
+  def generate_auth_token
+    SecureRandom.uuid.gsub(/\-/,'')
+  end
 end
